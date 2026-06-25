@@ -23,14 +23,15 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    await setupGame(interaction, {
-      good: interaction.options.getInteger('good'),
-      bad: interaction.options.getInteger('bad'),
-      wild: interaction.options.getInteger('wild')
-    });
 
-    if (!interaction.replied) {
-      await interaction.reply("✅ Game configured!");
-    }
-  }
+  await interaction.deferReply(); // ✅ tell Discord “working”
+
+  await setupGame(interaction, {
+    good: interaction.options.getInteger('good'),
+    bad: interaction.options.getInteger('bad'),
+    wild: interaction.options.getInteger('wild')
+  });
+
+  await interaction.editReply("✅ Game configured!");
+}
 };

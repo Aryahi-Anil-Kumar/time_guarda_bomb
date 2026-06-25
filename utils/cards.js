@@ -1,9 +1,9 @@
 function cardEmoji(type) {
   switch (type) {
-    case "ace": return "🂡";
-    case "king": return "🂮";
-    case "queen": return "🂭";
-    default: return "🂠";
+    case "ace": return "♠️ (Ace)";
+    case "king": return "🤴 (King)";
+    case "queen": return "👸 (Queen)";
+    default: return "🎴 (card)";
   }
 }
 

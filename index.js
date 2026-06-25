@@ -8,6 +8,12 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.commands = new Collection();
 const commands = [];
 
+// ✅ ADD IT HERE (after client is created)
+client.once('clientReady', () => {
+  console.log(`✅ Bot is online as ${client.user.tag}`);
+});
+
+// Load commands
 const files = fs.readdirSync('./commands');
 
 for (const file of files) {
@@ -16,6 +22,7 @@ for (const file of files) {
   commands.push(cmd.data.toJSON());
 }
 
+// Register commands
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 (async () => {
@@ -23,10 +30,11 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
     Routes.applicationCommands(process.env.CLIENT_ID),
     { body: commands }
   );
+  console.log("✅ Slash commands registered");
 })();
 
+// Interaction handler
 client.on('interactionCreate', async interaction => {
-
   if (interaction.isChatInputCommand()) {
     const cmd = client.commands.get(interaction.commandName);
     if (cmd) await cmd.execute(interaction);
@@ -37,4 +45,6 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
+// ✅ login stays LAST
 client.login(process.env.TOKEN);
+``
